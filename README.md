@@ -1,15 +1,8 @@
-# Simple Live Reload Helper
+# Dead simple live reload module
 
-A lightweight JavaScript helper for automatically reloading the page when changes are detected in local files (when running on `localhost`, `127.0.0.1`, or `[::1]`).
+A lightweight JavaScript helper for automatically reloading the page when changes are detected in local files. Perfect for simple static sites.
 
-## Features
-
-- Watches the current page and any new resources requested.
-- Reloads the page if any resource changes (based on `Last-Modified` or `ETag` headers).
-- Configurable interval for checks.
-- Debug mode for logging watched files.
-
-## Installation
+## Get started
 
 1. Add the script to your HTML file.
 
@@ -17,18 +10,14 @@ A lightweight JavaScript helper for automatically reloading the page when change
     <script src="https://kalabasa.github.io/simple-live-reload/script.js" data-interval="1000" data-debug="true"></script>
     ```
 
-- `data-interval` (optional): The interval time in milliseconds for checking the resource status (default: `1000` ms).
-- `data-debug` (optional): Set to `true` to enable debug logging to the console (default: `false`).
+    - `data-interval` (optional): The interval time in milliseconds for polling resource status (default: `1000` ms).
+    - `data-debug` (optional): Set to `true` to enable debug logging to the console (default: `false`).
 
-## How It Works
+2. Use your favourite local HTTP server, I don’t care.
 
-- The script checks for any changes to resources loaded by the page by making `HEAD` requests.
-- If any resource (e.g., HTML, CSS, JavaScript) has changed (based on `Last-Modified` or `ETag`), the page will automatically reload.
-
-## Development
-
-- If running on `localhost`, `127.0.0.1`, or `[::1]`, the script will start monitoring resources.
-- Modify the `interval` or enable `debug` mode to fit your needs.
+    ```sh
+    python3 -m http.server -d ./site/
+    ```
 
 ## License
 
