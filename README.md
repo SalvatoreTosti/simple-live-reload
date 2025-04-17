@@ -6,27 +6,33 @@ A lightweight JavaScript helper for automatically reloading the page when change
 
 1. Add the script to your HTML file.
 
-    ```html
-    <script src="https://kalabasa.github.io/simple-live-reload/script.js" data-interval="1000" data-debug="true"></script>
-    ```
-    - `data-interval` (optional): The interval time in milliseconds for polling resource status (default: `1000` ms).
-    - `data-debug` (optional): Set to `true` to enable debug logging to the console (default: `false`).
+   ```html
+   <script
+     src="https://kalabasa.github.io/simple-live-reload/script.js"
+     data-interval="1000"
+     data-debug="true"
+   ></script>
+   ```
+
+   - `data-interval` (optional): The interval time in milliseconds for polling resource status (default: `1000` ms).
+   - `data-debug` (optional): Set to `true` to enable debug logging to the console (default: `false`).
 
 2. Use your favourite local HTTP server, I don’t care.
 
-    ```sh
-    python3 -m http.server -d ./site/
-    ```
+   ```sh
+   python3 -m http.server -d ./site/
+   ```
 
-## Stable version
+## Production version
 
-No auto-updates!
+The script will refuse to run on non-localhost contexts, but you still shouldn’t ship the initial script request to your users in the first place. Better to check before loading the script.
 
-```html
-<script src="https://raw.githubusercontent.com/Kalabasa/simple-live-reload/12703b015e8a533ab8d5baae3596a10431c41491/script.js" data-interval="1000" data-debug="true"></script>
+```js
+if (window.location.hostname === "localhost") {
+  // replace with your self-hosted copy
+  import("https://kalabasa.github.io/simple-live-reload/script.js");
+}
 ```
-
-Or just copy the script into your project.
 
 ## License
 
