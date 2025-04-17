@@ -42,7 +42,11 @@
         (lastModified != null || etag != null) &&
         (lastModified != newLastModified || etag != newETag)
       ) {
-        location.reload();
+        try {
+          location.reload();
+        } catch (e) {
+          location = location;
+        }
       }
 
       lastModified = newLastModified;
