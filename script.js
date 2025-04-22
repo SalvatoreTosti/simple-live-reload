@@ -32,9 +32,43 @@
     }
 
     let lastModified, etag;
+    let url_methods = {}
+
+    async function attempt_fetch(url){
+      let res;
+      let method = url_methods[url];
+      if(method == "none"){
+        return;
+      }
+      
+      if(method){
+        return await fetch(url, { method: method });
+      } else {
+        res = await fetch(url, { method: "head" });
+        if(res.status < 300){
+          url_methods[url] = "head";
+          return res;
+        } 
+
+        if(res.status == 405){
+          res = await fetch(url, { method: "get" });
+        }
+        if(res.status < 300){
+          url_methods[url] = "get";
+        } 
+        if(res.status == 404){
+          url_methods[url] = "none";
+        } 
+        return res;
+      }
+    }
 
     async function check() {
-      const res = await fetch(url, { method: "head" });
+      let res = await attempt_fetch(url);
+      if(!res){
+        return;
+      }
+
       const newLastModified = res.headers.get("Last-Modified");
       const newETag = res.headers.get("ETag");
 
